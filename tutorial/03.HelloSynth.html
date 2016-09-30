@@ -1,0 +1,50 @@
+<html>
+
+<head>
+	<title> Hello, Synth </title>
+</head>
+
+<body>
+
+	<h1> Hello, Synth! </h1>
+
+	<button onclick="playSound()"> play </button>
+	<button onclick="stopSound()"> stop </button>
+
+	<script>
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	var context = new AudioContext();
+
+	// create
+	var oscillator = context.createOscillator();
+	var filter = context.createBiquadFilter();
+	var amp = context.createGain();
+
+	oscillator.connect(filter);
+	filter.connect(amp);
+
+	// control
+	oscillator.type = 'square';
+	oscillator.frequency.value = 440;
+
+	filter.frequency.value = 1000;
+	filter.Q.value = 1;
+
+	amp.gain.value = 0.5;
+
+	oscillator.start(0);
+
+	function playSound() {
+		amp.connect(context.destination);
+	}
+
+	function stopSound() {
+		amp.disconnect();
+	}
+
+	</script>
+
+</body>
+
+
+</html>

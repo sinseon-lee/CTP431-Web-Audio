@@ -1,0 +1,121 @@
+<html>
+
+<head>
+	<title> Audio Visualization </title>
+</head>
+
+<body>
+	<h1> Visualize Spectrum </h1>
+	<p> Web audio API example: visualizes the spectrum of audio files while playing. </p>
+
+	<input id="fileChooseInput" type="file"> </input>
+	<button onclick="playSound(myAudioBuffer)"> play </button>
+	<button onclick="stopSound()"> stop </button>
+
+	<p> <canvas id='spec_view' style="background: white;"> </canvas> <p>
+
+	<script>
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	var context = new AudioContext();
+	
+	var myAudioBuffer = null;
+
+	var analyser = context.createAnalyser();
+	analyser.fftSize = 2048;
+	analyser.smoothingTimeConstant = 0;
+
+	var WIDTH = 1024;
+	var HEIGHT = 512;
+
+	var spec_view = document.getElementById("spec_view");
+	spec_view.width = WIDTH
+	spec_view.height = HEIGHT
+
+	var control = document.getElementById("fileChooseInput");
+	control.addEventListener("change", fileChanged, false);
+
+	function draw_spec() {
+		// 2d canvas context
+		var drawContext = spec_view.getContext('2d');
+
+		// fill rectangular
+		drawContext.fillStyle = 'rgb(237, 214, 81)';
+		drawContext.fillRect(0, 0, WIDTH, HEIGHT);
+
+		// drawing line setting
+		drawContext.lineWidth = 2;
+		drawContext.strokeStyle = 'rgb(0, 0, 0)';
+		drawContext.beginPath();
+
+		// get samples
+		var dataArray = new Uint8Array(analyser.frequencyBinCount);
+		analyser.getByteFrequencyData(dataArray);
+
+		var sliceWidth = WIDTH * 1.0 / dataArray.length;
+		var x = 0;
+
+		for (var i = 0; i < dataArray.length; i++) {
+			var v = dataArray[i] / 256.0;
+			var y = HEIGHT - v * HEIGHT;
+
+			if ( i === 0 ) {
+				drawContext.moveTo(x, y);
+			} else {
+				drawContext.lineTo(x, y);
+			}
+
+			x += sliceWidth;
+		}
+
+		// last touch
+		drawContext.lineTo(draw_spec.width, draw_spec.height / 2);
+		drawContext.stroke();
+
+		// queue for next callback
+		window.requestAnimationFrame(draw_spec);
+	}
+
+	function fileChanged(e) {
+		var file = e.target.files[0];
+		var fileReader = new FileReader();
+		fileReader.onload = fileLoaded;
+		fileReader.readAsArrayBuffer(file);
+	}
+
+	function fileLoaded(e) {
+		context.decodeAudioData(e.target.result, function(buffer) {
+			myAudioBuffer = buffer;
+		});
+	}
+
+	var source = null;
+
+	function playSound(anyBuffer) {
+		source = context.createBufferSource();
+		source.buffer = anyBuffer;
+		source.connect(context.destination);
+
+		// connect source to analyser
+		source.connect(analyser);
+
+		source.start();
+
+		// visualize audio
+		draw_spec();
+	}
+
+	function stopSound() {
+		if (source) {
+			source.stop();
+		}
+	}
+
+
+
+
+	</script>
+
+
+</body>
+
+</html>

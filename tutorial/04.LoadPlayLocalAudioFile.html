@@ -1,0 +1,63 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title> Hello, Sample Play from Local </title>
+</head>
+
+<body>
+	<h1> Play Audio Files! </h1>
+	<p> Web audio API example: Open an audio file from your local folder and play/stop it by clicking the buttons </p>
+
+	<input id="fileChooseInput" type="file"> </input>
+	<button onclick="playSound(myAudioBuffer)"> play </button>
+	<button onclick="stopSound()"> stop </button>
+
+	<script>
+	window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+	var context = new AudioContext();
+	var myAudioBuffer = null;
+
+	// initialization
+	window.onload=function() {
+		var control = document.getElementById("fileChooseInput");
+		control.addEventListener("change", fileChanged, false);
+	}
+
+	function fileChanged(e) {
+		var file = e.target.files[0];
+		var fileReader = new FileReader();
+		fileReader.onload = fileLoaded;
+		fileReader.readAsArrayBuffer(file);
+	}
+
+	function fileLoaded(e) {
+		context.decodeAudioData(e.target.result, function(buffer) {
+				myAudioBuffer = buffer;
+				});
+		console.log("File has been loaded.")
+	}
+
+	var source = null;
+
+	function playSound(anyBuffer) {
+		source = context.createBufferSource();
+		source.buffer = anyBuffer;
+		source.connect(context.destination);
+		source.start();
+	}
+
+	function stopSound() {
+		if (source) {
+			source.stop();
+		}
+	}
+
+	</script>
+		
+
+
+</body>
+
+</html>
