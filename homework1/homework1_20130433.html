@@ -68,7 +68,9 @@
 </div>
 
 <script>
-    var context = new (window.AudioContext || window.webkitAudioContext)();
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+	var context = new (window.AudioContext || window.webkitAudioContext)();
 
     var buffers = new Array(3); // 0 : kick, 1 : snare, 2 : hihat
     var volume_id = new Array("kickVol","snareVol","hihatVol");
