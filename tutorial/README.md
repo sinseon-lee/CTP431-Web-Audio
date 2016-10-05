@@ -1,22 +1,18 @@
 # Tutorial
 
-Example #1: 
-[Example \#1: Hello, Sine](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/01.HelloSine.html)
+[Example \#1: Hello, Sine](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/1.HelloSine.html)
 
-Example #2: Hello, Sine2
+[Example #2: Hello, Sine2](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/2.HelloSine2.html)
 
-Example #3: Hello, Synth
+[Example #3: Hello, Synth](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/3.HelloSynth.html)
 
-Example #4: Load Play Local Audio File
+[Example #4: Load Play Local Audio File](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/4.LoadPlayLocalAudioFile.html)
 
-Example #5: Load Play Remote Audio File
+[Example #5: Load Play Remote Audio File]()
 
-Example #6: Visualize Wave Form
+[Example #6: Visualize Wave Form](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/6.VisualizeWaveform.html)
 
-Example #7: Visualize Spectrum
+[Example #7: Visualize Spectrum](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/7.VisualizeSpectrum.html)
 
-Example #8: Visualize Audio Mic Input
+[Example #8: Visualize Audio Mic Input](https://rawgit.com/sinseon-lee/CTP431-Web-Audio/master/tutorial/8.VisualizeAudioMicInput.html)
 
-
-[Example \#1: Hello,
-Sine!](https://rawgit.com/juhannam/ctp431/master/session1/01.HelloSine.html)
